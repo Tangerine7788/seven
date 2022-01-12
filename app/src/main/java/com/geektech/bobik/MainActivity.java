@@ -2,9 +2,11 @@ package com.geektech.bobik;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -12,12 +14,14 @@ public class MainActivity extends AppCompatActivity {
     private Integer firstVar, secondVar;
     private Boolean isClickOperation = false;
     private String operation;
+    private Button btnExport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tvResult = findViewById(R.id.tv_result);
+        btnExport = findViewById(R.id.btn_export);
     }
 
     public void onClickNumber(View view) {
@@ -174,8 +178,18 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.btn_equal:
+                btnExport.setVisibility(View.VISIBLE);
                 secondVar = Integer.parseInt(tvResult.getText().toString());
                 Integer result;
+                btnExport.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                        intent.putExtra("key", tvResult.getText().toString());
+                        startActivity(intent);
+                    }
+                });
+
 
                 switch (operation) {
                     case "+":
